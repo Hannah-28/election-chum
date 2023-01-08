@@ -1,0 +1,26 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+    'Lucida Sans', Arial, sans-serif;
+}
+.nav {
+  height: 9vh;
+}
+.front-picture {
+  background-image: url('./../public/front-picture.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 91vh;
+}
+.children {
+  margin-top: 9vh;
+}
+input {
+  border: 1px solid gray;
+}
+.front-word {
+  max-width: 100%;
+  margin: 0 auto;
+}
