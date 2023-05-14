@@ -12,6 +12,13 @@ export const login = {
   error: null,
 };
 
+export const verify = {
+  isLoading: false,
+  isSuccessful: false,
+  data: null,
+  error: null,
+};
+
 export const forgotPassword = {
   isLoading: false,
   isSuccessful: false,

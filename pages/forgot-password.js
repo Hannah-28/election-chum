@@ -1,34 +1,42 @@
 import React, { useEffect, useState, useRef } from 'react';
-import Layout from '../components/Layout';
-import Link from 'next/link';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
-import { login, loginCleanup } from '../store/actions/login';
+import {
+  forgotPassword,
+  forgotPasswordCleanup,
+} from '../store/actions/forgot-password';
+import { useRouter } from 'next/router';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Layout from '../components/Layout';
 
-export default function Login() {
-  const formikRef = useRef();
-  const dispatch = useDispatch();
-  const loginState = useSelector((s) => s.login);
+const ChangePassword = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
+  const formikRef = useRef();
+  const forgotPasswordState = useSelector((s) => s.forgotPassword);
+  const [forgotPasswordError, setForgotPasswordError] = useState(null);
 
   const validationSchema = Yup.object().shape({
-    votersID: Yup.string().trim().required('VotersID is required'),
-    password: Yup.string().trim().required('Password is required'),
+    email: Yup.string()
+      .trim()
+      .required('Email is required')
+      .email('Fill in a valid email'),
+    password: Yup.string()
+      .trim()
+      .required('Password is required')
+      .min(6, ' Password must have 6 or more character'),
   });
 
-  const ref = useRef(true);
   useEffect(() => {
-    if (loginState.isSuccessful) {
+    if (forgotPasswordState.isSuccessful) {
       if (formikRef.current) {
         formikRef.current.resetForm();
       }
-      toast.success(`${loginState.data.msg}`, {
+      toast.success(`Password successfully changed`, {
         position: 'top-center',
-        autoClose: 3000,
+        autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -37,13 +45,14 @@ export default function Login() {
         theme: 'light',
       });
       setTimeout(() => {
-        dispatch(loginCleanup());
-        router.push('/verify');
-      }, 3000);
-    } else if (loginState.error) {
-      toast.error(`Your account doesn't exist or incorrect password`, {
+        dispatch(forgotPasswordCleanup());
+        router.push('/login');
+      }, 4000);
+    } else if (forgotPasswordState.error) {
+      setForgotPasswordError(forgotPasswordState.error);
+      toast.error(`${forgotPasswordError}!!!`, {
         position: 'top-center',
-        autoClose: 3000,
+        autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -51,25 +60,35 @@ export default function Login() {
         progress: undefined,
         theme: 'light',
       });
-      dispatch(loginCleanup());
+
+      dispatch(forgotPasswordCleanup());
     }
-  }, [dispatch, loginState, router]);
-  // console.log(loginState)
-  console.log(loginState, 'Login')
+  }, [forgotPasswordState, dispatch, router, forgotPasswordError]);
 
   return (
-    <Layout title="Login">
-      <div className="max-w-6xl mx-auto px-8 my-10 login">
-        <form className="shadow-md bg-gray-50 rounded-md p-7">
-          <h1 className="mb-4 text-2xl font-bold">Login</h1>
-
+    <Layout title="Forgot Password">
+      {/* <div className="bg-light min-vh-100 d-flex flex-row align-items-center"> */}
+      <div className="max-w-6xl mx-auto px-8 my-10 register">
+        <form className="shadow-md bg-gray-50 rounded-md p-7 my-10">
+          <h1 className="mb-4 text-2xl font-bold">Change Password</h1>
+          <p className="text-medium-emphasis">Enter your new password</p>
+          {/* {forgotPasswordState.isSuccessful ? (
+        // <CAlert color="success">
+        <p>You have successfuly changed your password!!!</p>
+      ) : // </CAlert>
+      null}
+      {forgotPasswordError ? (
+        // <CAlert color="danger"></CAlert>
+        <p>{forgotPasswordError}!!!</p>
+      ) : null} */}
           <Formik
             initialValues={{
-              votersID: '',
+              email: '',
               password: '',
             }}
             onSubmit={(values, { setSubmitting }) => {
-              dispatch(login(values));
+              setForgotPasswordError(null);
+              dispatch(forgotPassword(values));
               setSubmitting(false);
             }}
             validationSchema={validationSchema}
@@ -87,16 +106,16 @@ export default function Login() {
               <>
                 <div className="mb-4">
                   <input
-                    name="votersID"
+                    name="email"
                     className="w-full mt-4 py-2 pl-2 text-gray-700"
-                    type="text"
-                    placeholder="Voter's ID"
-                    value={values.votersID}
-                    onChange={handleChange('votersID')}
-                    onBlur={handleBlur('votersID')}
+                    type="email"
+                    placeholder="Email"
+                    value={values.email}
+                    onChange={handleChange('email')}
+                    onBlur={handleBlur('email')}
                   />
-                  {errors.votersID && touched.votersID ? (
-                    <p style={{ color: 'red' }}>{errors.votersID}</p>
+                  {errors.email && touched.email ? (
+                    <p style={{ color: 'red' }}>{errors.email}</p>
                   ) : null}
                 </div>
                 <div className="mb-10">
@@ -114,45 +133,20 @@ export default function Login() {
                   ) : null}
                 </div>
                 <button
+                  disabled={!isValid || forgotPasswordState.isLoading}
                   type="submit"
                   className="border-black text-white hover:bg-black px-7 py-3 rounded-md bg-zinc-900 text-base font-medium"
                   onClick={handleSubmit}
-                  disabled={!isValid || loginState.isLoading}
                 >
-                  Login
+                  Proceed
                 </button>
-                <div className="flex mt-5 space-x-5 text-sm">
-                  <Link
-                    href="/register"
-                    className="text-blue-500 hover:underline hover:text-blue-800"
-                  >
-                    REGISTER?
-                  </Link>
-                  <Link
-                    href="/forgot-password"
-                    className="text-blue-500 hover:underline hover:text-blue-800"
-                  >
-                    FORGOT PASSWORD?
-                  </Link>
-                </div>
               </>
             )}
           </Formik>
         </form>
       </div>
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        limit={1}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
     </Layout>
   );
-}
+};
+
+export default ChangePassword;

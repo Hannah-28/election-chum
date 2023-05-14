@@ -10,6 +10,12 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGIN_CLEANUP = 'LOGIN_CLEANUP';
 
+// verify user
+export const VERIFY_START = 'VERIFY_START';
+export const VERIFY_SUCCESS = 'VERIFY_SUCCESS';
+export const VERIFY_FAIL = 'VERIFY_FAIL';
+export const VERIFY_CLEANUP = 'VERIFY_CLEANUP';
+
 // resets a user password
 export const FORGOT_PASSWORD_START = 'FORGOT_PASSWORD_START';
 export const FORGOT_PASSWORD_SUCCESS = 'FORGOT_PASSWORD_SUCCESS';

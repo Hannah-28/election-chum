@@ -27,7 +27,7 @@ export const getSingleReview = (id) => async (dispatch) => {
       path: `/review/${id}`,
       method: 'GET',
     }
-    const { data } = await AxiosCall(requestObj)
+    const data = await AxiosCall(requestObj)
     dispatch(getSingleReviewSuccess(data))
   } catch (err) {
     console.log(err)

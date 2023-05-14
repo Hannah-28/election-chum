@@ -19,7 +19,7 @@ export default function UserSidebar({ title, children }) {
         />
       </Head>
 
-      <div className="flex h-full">
+      <div className="flex h-full side">
         <Sidebar customBreakPoint="900px" transitionDuration={1000}>
           <Menu className="bg-black h-full">
             <div className="p-5">
@@ -36,6 +36,12 @@ export default function UserSidebar({ title, children }) {
               className="text-indigo-500 hover:text-black my-4 text-base font-medium"
             >
               Candidates
+            </MenuItem>
+            <MenuItem
+              routerLink={<Link href="/review" />}
+              className="text-indigo-500 hover:text-black my-4 text-base font-medium"
+            >
+              Review
             </MenuItem>
             <MenuItem
               routerLink={<Link href="/vote" />}
@@ -66,9 +72,9 @@ export default function UserSidebar({ title, children }) {
             )}
           </div>
 
-          <div>
-            <div className="w-full">{children}</div>
-          </div>
+          
+            <div className="w-full h-f">{children}</div>
+          
           <footer className="flex justify-center items-center text-center my-10">
             <p className="text-sm">
               &copy; 2022 - 2023 ELECTION CHUM, ALL RIGHTS RESERVED

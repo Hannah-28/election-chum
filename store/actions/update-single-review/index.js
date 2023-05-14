@@ -22,12 +22,12 @@ export const updateSingleReviewCleanup = () => ({
 
 export const updateSingleReview = (id) => async (dispatch) => {
   try {
-    dispatch(markNotificationAsReadStart())
+    dispatch(updateSingleReviewStart())
     const requestObj = {
       path: `/review/${id}`,
       method: 'PATCH',
     }
-    const { data } = await AxiosCall(requestObj)
+    const data = await AxiosCall(requestObj)
     dispatch(updateSingleReviewSuccess(data))
   } catch (err) {
     const error = ErrorHandler(err)

@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function Contact() {
   const nameRef = useRef();
   const emailRef = useRef();
-  const phoneRef = useRef();
+  const telephoneRef = useRef();
   function sendEmail(e) {
     e.preventDefault();
 
@@ -85,7 +85,7 @@ export default function Contact() {
             <input
               type="tel"
               name="phone"
-              ref={phoneRef}
+              ref={telephoneRef}
               className="w-full mt-4 py-2 pl-2 text-gray-700"
               id="phone"
               required

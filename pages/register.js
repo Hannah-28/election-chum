@@ -48,7 +48,7 @@ export default function Register() {
         `Check back in afew days to confirm if you're eligible to vote or not. Thanks`,
         {
           position: 'top-center',
-          autoClose: 5000,
+          autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -60,11 +60,11 @@ export default function Register() {
       setTimeout(() => {
         dispatch(registerCleanup());
         router.push('/login');
-      }, 5000);
+      }, 3000);
     } else if (registerState.error) {
       toast.error(`Something went wrong!!!`, {
         position: 'top-center',
-        autoClose: 5000,
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -87,11 +87,11 @@ export default function Register() {
               lastName: '',
               phoneNumber: '',
               email: '',
-              ['State of Origin']: '',
+              'State of Origin': '',
               LGA: '',
               residence: '',
               passport: '',
-              ['Birth Certificate']: '',
+              'Birth Certificate': '',
               password: '',
             }}
             onSubmit={(values, { setSubmitting }) => {
@@ -285,7 +285,7 @@ export default function Register() {
       </div>
       <ToastContainer
         position="top-center"
-        autoClose={5000}
+        autoClose={3000}
         limit={1}
         hideProgressBar={false}
         newestOnTop={false}

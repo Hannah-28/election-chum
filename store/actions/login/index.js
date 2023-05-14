@@ -1,6 +1,7 @@
 import * as types from '../../action-types';
 import AxiosCall from '../../../utils/axios';
 import ErrorHandler from '../../../utils/error-handler';
+import Cookies from 'js-cookie';
 
 export const loginStart = () => ({
   type: types.LOGIN_START,
@@ -28,8 +29,12 @@ export const login = (payload) => async (dispatch) => {
       method: 'POST',
       data: payload,
     };
-    const { data } = await AxiosCall(requestObj);
-    // localStorage.setItem('authToken', data.token);
+    const data  = await AxiosCall(requestObj);
+    await Cookies.set('tok', data.token)
+    // something like this
+    const votersID = await Cookies.set('ID', data.votersID)
+    console.log(Cookies.get('tok'), 'hiii')
+    localStorage.setItem('authToken', data.token);
     dispatch(loginSuccess(data));
   } catch (err) {
     console.log(err);
