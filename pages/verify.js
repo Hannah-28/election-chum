@@ -7,8 +7,7 @@ import { useRouter } from 'next/router';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Layout from '../components/Layout';
-import Cookies from 'js-cookie';
-import localStorage from 'redux-persist/es/storage';
+
 
 const Verify = () => {
   const router = useRouter();
@@ -18,13 +17,7 @@ const Verify = () => {
   const [verifyError, setVerifyError] = useState(null);
 
   const validationSchema = Yup.object().shape({
-    // votersID: Yup.string().trim().required('VotersID is required'),
-    // password: Yup.string()
-    //   .trim()
-    //   .required('Password is required')
-    //   .min(6, ' Password must have 6 or more character'),
     otp: Yup.string().trim().required('OTP is required'),
-    // token: Yup.string()
   });
 
   useEffect(() => {
@@ -62,34 +55,15 @@ const Verify = () => {
       dispatch(verifyCleanup());
     }
   }, [verifyState, dispatch, router, verifyError]);
-  const token = Cookies.get('token')
-  console.log(token, 'Token')
-  // console.log(localStorage.getItem('authToken'), 'hi')
-  // const data = localStorage.getItem('key')
-  // setMyLocalStorageData(JSON.parse(data))
-
   return (
     <Layout title="Verify">
-      {/* <div className="bg-light min-vh-100 d-flex flex-row align-items-center"> */}
       <div className="max-w-6xl mx-auto px-8 my-10 register">
         <form className="shadow-md bg-gray-50 rounded-md p-7 my-10">
           <h1 className="mb-4 text-2xl font-bold">Verify</h1>
           <p className="text-medium-emphasis">Enter the secure pin sent to your phone</p>
-          {/* {forgotPasswordState.isSuccessful ? (
-        // <CAlert color="success">
-        <p>You have successfuly changed your password!!!</p>
-      ) : // </CAlert>
-      null}
-      {forgotPasswordError ? (
-        // <CAlert color="danger"></CAlert>
-        <p>{forgotPasswordError}!!!</p>
-      ) : null} */}
           <Formik
             initialValues={{
-              // votersID: '',
-              // password: '',
               otp: '',
-              // token: `${localStorage.getItem('authToken')}`
             }}
             onSubmit={(values, { setSubmitting }) => {
               setVerifyError(null);
@@ -109,34 +83,6 @@ const Verify = () => {
               handleBlur,
             }) => (
               <>
-                {/* <div className="mb-4">
-                  <input
-                    name="votersID"
-                    className="w-full mt-4 py-2 pl-2 text-gray-700"
-                    type="text"
-                    placeholder="Voter's ID"
-                    value={values.votersID}
-                    onChange={handleChange('votersID')}
-                    onBlur={handleBlur('votersID')}
-                  />
-                  {errors.votersID && touched.votersID ? (
-                    <p style={{ color: 'red' }}>{errors.votersID}</p>
-                  ) : null}
-                </div>
-                <div className="mb-4">
-                  <input
-                    name="password"
-                    className="w-full mt-4 py-2 pl-2 text-gray-700"
-                    type="password"
-                    placeholder="Password"
-                    value={values.password}
-                    onChange={handleChange('password')}
-                    onBlur={handleBlur('password')}
-                  />
-                  {errors.password && touched.password ? (
-                    <p style={{ color: 'red' }}>{errors.password}</p>
-                  ) : null}
-                </div> */}
                 <div className="mb-10">
                   <input
                     name="otp"
