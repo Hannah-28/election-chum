@@ -54,7 +54,7 @@ export default function SingleReview() {
     // addToast(enableToast)
   };
 
-  console.log(singleReview?.details, 'details');
+  console.log(singleReview?.details?.passport?.path, 'details');
 
   return (
     <UserSidebar title="Details">
@@ -96,7 +96,7 @@ export default function SingleReview() {
               </div>
               <div className="my-4">
                 <h6>Passport</h6>
-                <img src={singleReview.details.passport.path} alt="passport" />
+                <img src={singleReview?.details?.passport?.path} alt="passport" />
               </div>
               <div className="my-4">
                 <h6>Birth Certificate</h6>

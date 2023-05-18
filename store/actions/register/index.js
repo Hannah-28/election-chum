@@ -1,5 +1,5 @@
 import * as types from '../../action-types';
-import AxiosCall from '../../../utils/axios';
+import RegisterCall from '../../../utils/axios/register';
 import ErrorHandler from '../../../utils/error-handler';
 
 export const registerStart = () => ({
@@ -28,7 +28,7 @@ export const register = (payload) => async (dispatch) => {
       method: 'POST',
       data: payload,
     };
-    const { data } = await AxiosCall(requestObj);
+    const data = await RegisterCall(requestObj);
     dispatch(registerSuccess(data));
   } catch (err) {
     const error = ErrorHandler(err);
