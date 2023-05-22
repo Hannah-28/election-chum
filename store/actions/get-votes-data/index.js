@@ -27,7 +27,7 @@ export const getVotesData = () => async (dispatch) => {
       path: '/',
       method: 'GET',
     };
-    const { data } = await AxiosCall(requestObj);
+    const data = await AxiosCall(requestObj);
     dispatch(getVotesDataSuccess(data));
   } catch (err) {
     console.log(err);

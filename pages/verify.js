@@ -40,7 +40,7 @@ const Verify = () => {
         router.push('/candidates');
       }, 3000);
     } else if (verifyState.error) {
-      setVerifyError(verifyState.error);
+      setVerifyError('Invalid OTP');
       toast.error(`${verifyError}!!!`, {
         position: 'top-center',
         autoClose: 3000,

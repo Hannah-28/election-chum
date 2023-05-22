@@ -24,11 +24,11 @@ export const forgotPassword = (payload) => async (dispatch) => {
   try {
     dispatch(forgotPasswordStart());
     const requestObj = {
-      path: '/forgotpassword',
+      path: '/forgot-password',
       method: 'POST',
       data: payload,
     };
-    const { data } = await AxiosCall(requestObj);
+    const data = await AxiosCall(requestObj);
     dispatch(forgotPasswordSuccess(data));
   } catch (err) {
     const error = ErrorHandler(err);

@@ -20,9 +20,8 @@ export default function Contact() {
       )
       .then(
         (result) => {
-          console.log(result.text);
           toast.success(
-            'We will respond to you via your email as soon as possible.',
+            'We will respond to you via your mail as soon as possible.',
             {
               position: 'top-center',
               autoClose: 5000,

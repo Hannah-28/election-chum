@@ -12,6 +12,10 @@ import {
 } from '../../store/actions/update-single-review';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Image from 'next/image';
+import { ToastContainer, toast } from 'react-toastify';
+import { getFile, getFileCleanUp } from '../../store/actions/get-file';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
 export default function SingleReview() {
   const router = useRouter();
@@ -19,10 +23,19 @@ export default function SingleReview() {
   const dispatch = useDispatch();
   const getSingleReviewState = useSelector((s) => s.getSingleReview);
   const updateSingleReviewState = useSelector((s) => s.updateSingleReview);
+  const getFileState = useSelector((s) => s.getFile);
   // const navigate = useNavigate();
+  const [show, setShow] = useState(false);
+  const [status, setStatus] = useState('');
+  const [comment, setComment] = useState('');
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const [singleReview, setSingleReview] = useState([]);
   const [, setUpdate] = useState([]);
+  const [file, setFile] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
   useEffect(() => {
     dispatch(getSingleReview(id));
     // dispatch(updateSingleReview(id));
@@ -38,28 +51,84 @@ export default function SingleReview() {
   }, [getSingleReviewState, dispatch]);
 
   useEffect(() => {
+    if (getFileState.isSuccessful) {
+      setFile(getFileState.data);
+      dispatch(getFileCleanUp());
+    } else if (getFile.error) {
+      dispatch(getFileCleanUp());
+    }
+  }, [getFileState, dispatch]);
+
+  // useEffect(() => {
+  //   if (getFileState.isSuccessful) {
+  //     // setFile(getFileState.data);
+  //     const test = async () => {
+  //       await getFileState.data
+  //         .blob()
+  //         .then((blob) => {
+  //           const url = URL.createObjectURL(blob);
+  //           console.log(url, 'URL');
+  //           setFile(url);
+  //         })
+  //         .catch((e) => console.log(e, 'from blobing'));
+  //     };
+  //     test();
+  //     dispatch(getFileCleanUp());
+  //   } else if (getFile.error) {
+  //     dispatch(getFileCleanUp());
+  //   }
+  // }, [getFileState, dispatch]);
+
+  useEffect(() => {
     if (updateSingleReviewState.isSuccessful) {
       setUpdate(updateSingleReviewState.data);
-      dispatch(updateSingleReviewCleanup());
+      toast.success(`${updateSingleReviewState.data.msg}`, {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
+      setTimeout(() => {
+        dispatch(updateSingleReviewCleanup());
+        router.push('/review');
+      }, 3000);
     } else if (updateSingleReview.error) {
+      toast.error(`${updateSingleReviewState.error}`, {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
       dispatch(updateSingleReviewCleanup());
     }
-  }, [updateSingleReviewState, dispatch]);
+  }, [updateSingleReviewState, dispatch, router]);
 
-  const update = (id) => {
-    // const payload = {
-    //   memberId: uuid,
-    // }
-    dispatch(updateSingleReview(id));
+  const update = () => {
+    const body = {
+      status: status,
+      comment: comment,
+    };
+    dispatch(updateSingleReview(id, body));
     // addToast(enableToast)
   };
+  const passport = () => {
+    dispatch(getFile(singleReview.details.passport.passportID));
+  };
 
-  console.log(singleReview?.details?.passport?.path, 'details');
+  console.log(file, 'File');
 
   return (
     <UserSidebar title="Details">
-      <div className="h-screen my-10">
-        {singleReview.details === undefined ? (
+      <div className="my-10">
+        {singleReview?.details === undefined ? (
           <>
             <div className="spinner-border" role="status"></div>
           </>
@@ -96,7 +165,18 @@ export default function SingleReview() {
               </div>
               <div className="my-4">
                 <h6>Passport</h6>
-                <img src={singleReview?.details?.passport?.path} alt="passport" />
+                <button
+                  // type="submit"
+                  className="border-black text-white hover:bg-black px-7 py-3 rounded-md bg-zinc-900 text-base font-medium"
+                  onClick={() => {
+                    passport();
+
+                    // dispatch(getFile(singleReview?.details?.passport?.passportID))
+                  }}
+                >
+                  view
+                </button>
+                <img src={file} alt="passport" />
               </div>
               <div className="my-4">
                 <h6>Birth Certificate</h6>
@@ -107,17 +187,78 @@ export default function SingleReview() {
                 className="border-black text-white hover:bg-black px-7 py-3 rounded-md bg-zinc-900 text-base font-medium"
                 onClick={() => {
                   update(id);
-                  // setTimeout(() => {
-                  //   router.push('/review')
-                  // }, 3000)
                 }}
               >
                 Proceed
+              </button>
+              <button
+                className="border-black text-white hover:bg-black px-7 py-3 rounded-md bg-zinc-900 text-base font-medium"
+                onClick={handleShow}
+              >
+                Review
               </button>
             </>
           </>
         )}
       </div>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div>
+            <label htmlFor="status">Status:</label>
+
+            <select
+              className="w-full my-2 py-2 text-gray-700 border"
+              name="status"
+              id="status"
+              onChange={(value) => setStatus(value.target.value)}
+            >
+              <option value="">Open this select menu</option>
+              <option value="approved">Approved</option>
+              <option value="declined">Declined</option>
+            </select>
+          </div>
+
+          <div>
+            <label htmlFor="comment">Comment</label>
+            <input
+              className="w-full my-2 py-2 text-gray-700 border"
+              name="comment"
+              id="comment"
+              onChange={(value) => setComment(value.target.value)}
+            />
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button
+            variant="primary"
+            onClick={() => {
+              update(id);
+            }}
+            disabled={status === '' || comment === ''}
+          >
+            Proceed
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        limit={1}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </UserSidebar>
   );
 }

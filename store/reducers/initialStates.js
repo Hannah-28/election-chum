@@ -60,3 +60,10 @@ export const vote = {
   data: null,
   error: null,
 };
+
+export const getFile = {
+  isLoading: false,
+  isSuccessful: false,
+  data: [],
+  error: null,
+};

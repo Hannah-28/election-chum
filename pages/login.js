@@ -26,7 +26,7 @@ export default function Login() {
       if (formikRef.current) {
         formikRef.current.resetForm();
       }
-      toast.success(`${loginState.data.msg}`, {
+      toast.success("Check your mail for an OTP sent", {
         position: 'top-center',
         autoClose: 3000,
         hideProgressBar: false,
@@ -54,8 +54,7 @@ export default function Login() {
       dispatch(loginCleanup());
     }
   }, [dispatch, loginState, router]);
-  // console.log(loginState)
-  console.log(loginState, 'Login')
+
 
   return (
     <Layout title="Login">
@@ -142,7 +141,7 @@ export default function Login() {
       </div>
       <ToastContainer
         position="top-center"
-        autoClose={5000}
+        autoClose={3000}
         limit={1}
         hideProgressBar={false}
         newestOnTop={false}

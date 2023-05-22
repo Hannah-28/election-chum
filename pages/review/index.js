@@ -9,13 +9,15 @@ import { getReview, getReviewCleanup } from '../../store/actions/get-review';
 // import './../styles.css'
 
 //Bootstrap and jQuery libraries
+import $ from 'jquery';
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import 'jquery-ui-dist/jquery-ui';
-// import 'jquery/dist/jquery.min.js';
+import 'jquery-ui-dist/jquery-ui';
+import 'jquery/dist/jquery.min.js';
+
 // //Datatable Modules
-// import "datatables.net-dt/js/dataTables.dataTables"
-// import "datatables.net-dt/css/jquery.dataTables.min.css"
-// import $ from 'jquery';
+import "datatables.net-dt/js/dataTables.dataTables"
+import "datatables.net-dt/css/jquery.dataTables.min.css"
+
 import moment from 'moment';
 
 export default function Review() {
@@ -38,47 +40,47 @@ export default function Review() {
   }, [dispatch, getReviewState]);
   console.log(review, 'data');
 
-  // $(document).ready(function () {
-  //   $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
-  //     var min = $('#min').datepicker('getDate');
-  //     var max = $('#max').datepicker('getDate');
-  //     var startDate = new Date(data[1]);
-  //     if (min === null && max === null) {
-  //       return true;
-  //     }
-  //     if (min === null && startDate <= max) {
-  //       return true;
-  //     }
-  //     if (max === null && startDate >= min) {
-  //       return true;
-  //     }
-  //     if (startDate <= max && startDate >= min) {
-  //       return true;
-  //     }
-  //     return false;
-  //   });
+  $(document).ready(function () {
+    $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+      var min = $('#min').datepicker('getDate');
+      var max = $('#max').datepicker('getDate');
+      var startDate = new Date(data[1]);
+      if (min === null && max === null) {
+        return true;
+      }
+      if (min === null && startDate <= max) {
+        return true;
+      }
+      if (max === null && startDate >= min) {
+        return true;
+      }
+      if (startDate <= max && startDate >= min) {
+        return true;
+      }
+      return false;
+    });
 
-  //   $('#min').datepicker({
-  //     onSelect: function () {
-  //       table.draw();
-  //     },
-  //     changeMonth: true,
-  //     changeYear: true,
-  //   });
-  //   $('#max').datepicker({
-  //     onSelect: function () {
-  //       table.draw();
-  //     },
-  //     changeMonth: true,
-  //     changeYear: true,
-  //   });
-  //   var table = $('#example').DataTable();
+    $('#min').datepicker({
+      onSelect: function () {
+        table.draw();
+      },
+      changeMonth: true,
+      changeYear: true,
+    });
+    $('#max').datepicker({
+      onSelect: function () {
+        table.draw();
+      },
+      changeMonth: true,
+      changeYear: true,
+    });
+    var table = $('#example').DataTable();
 
-  //   // Event listener to the two range filtering inputs to redraw on input
-  //   $('#min, #max').change(function () {
-  //     table.draw();
-  //   });
-  // });
+    // Event listener to the two range filtering inputs to redraw on input
+    $('#min, #max').change(function () {
+      table.draw();
+    });
+  });
   return (
     <UserSidebar title="Review">
       <div className="h-screen my-10">

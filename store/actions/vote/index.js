@@ -28,7 +28,7 @@ export const vote = (payload) => async (dispatch) => {
       method: 'POST',
       data: payload,
     };
-    const { data } = await AxiosCall(requestObj);
+    const data = await AxiosCall(requestObj);
     dispatch(voteSuccess(data));
   } catch (err) {
     const error = ErrorHandler(err);

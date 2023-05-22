@@ -32,8 +32,8 @@ export const login = (payload) => async (dispatch) => {
     const data  = await AxiosCall(requestObj);
     await Cookies.set('tok', data.token)
     // something like this
-    const votersID = await Cookies.set('ID', data.votersID)
-    console.log(Cookies.get('tok'), 'hiii')
+    // const votersID = await Cookies.set('ID', data.votersID)
+    // console.log(Cookies.get('tok'), 'hiii')
     localStorage.setItem('authToken', data.token);
     dispatch(loginSuccess(data));
   } catch (err) {

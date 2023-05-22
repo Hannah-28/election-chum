@@ -51,3 +51,9 @@ export const VOTE_START = 'VOTE_START';
 export const VOTE_SUCCESS = 'VOTE_SUCCESS';
 export const VOTE_FAIL = 'VOTE_FAIL';
 export const VOTE_CLEANUP = 'VOTE_CLEANUP';
+
+// get file
+export const GET_FILE_START = 'GET_FILE_START';
+export const GET_FILE_SUCCESS = 'GET_FILE_SUCCESS';
+export const GET_FILE_FAIL = 'GET_FILE_FAIL';
+export const GET_FILE_CLEANUP = 'GET_FILE_CLEANUP';

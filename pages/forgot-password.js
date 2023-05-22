@@ -26,7 +26,6 @@ const ChangePassword = () => {
     password: Yup.string()
       .trim()
       .required('Password is required')
-      .min(6, ' Password must have 6 or more character'),
   });
 
   useEffect(() => {
@@ -34,9 +33,9 @@ const ChangePassword = () => {
       if (formikRef.current) {
         formikRef.current.resetForm();
       }
-      toast.success(`Password successfully changed`, {
+      toast.success(`Password successfully changed. Check your mail to click on the link to verify your changes.`, {
         position: 'top-center',
-        autoClose: 5000,
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -52,7 +51,7 @@ const ChangePassword = () => {
       setForgotPasswordError(forgotPasswordState.error);
       toast.error(`${forgotPasswordError}!!!`, {
         position: 'top-center',
-        autoClose: 5000,
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -67,20 +66,10 @@ const ChangePassword = () => {
 
   return (
     <Layout title="Forgot Password">
-      {/* <div className="bg-light min-vh-100 d-flex flex-row align-items-center"> */}
       <div className="max-w-6xl mx-auto px-8 my-10 register">
         <form className="shadow-md bg-gray-50 rounded-md p-7 my-10">
           <h1 className="mb-4 text-2xl font-bold">Change Password</h1>
           <p className="text-medium-emphasis">Enter your new password</p>
-          {/* {forgotPasswordState.isSuccessful ? (
-        // <CAlert color="success">
-        <p>You have successfuly changed your password!!!</p>
-      ) : // </CAlert>
-      null}
-      {forgotPasswordError ? (
-        // <CAlert color="danger"></CAlert>
-        <p>{forgotPasswordError}!!!</p>
-      ) : null} */}
           <Formik
             initialValues={{
               email: '',
@@ -145,6 +134,19 @@ const ChangePassword = () => {
           </Formik>
         </form>
       </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        limit={1}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </Layout>
   );
 };

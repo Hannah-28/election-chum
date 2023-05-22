@@ -46,7 +46,7 @@ export default function Register() {
         formikRef.current.resetForm();
       }
       toast.success(
-        `Check back in afew days to confirm if you're eligible to vote or not. Thanks`,
+        `${registerState.data.msg}`,
         {
           position: 'top-center',
           autoClose: 3000,
@@ -63,7 +63,7 @@ export default function Register() {
         router.push('/login');
       }, 3000);
     } else if (registerState.error) {
-      toast.error(`Something went wrong!!!`, {
+      toast.error(`Account already exists`, {
         position: 'top-center',
         autoClose: 3000,
         hideProgressBar: false,
@@ -77,7 +77,6 @@ export default function Register() {
     }
   }, [registerState, dispatch, router]);
 
-  console.log();
   return (
     <Layout title="Register">
       <div className="max-w-6xl mx-auto px-8 my-10 register">
@@ -114,7 +113,6 @@ export default function Register() {
               setFieldValue,
             }) => (
               <>
-              {console.log(values)}
                 <div className="mb-4">
                   <input
                     name="firstName"
@@ -232,7 +230,7 @@ export default function Register() {
                     name="passport"
                     // value={values.passport}
                     onChange={(event) => {
-                      console.log(event.target.files[0]);
+                      // console.log(event.target.files[0]);
                       setFieldValue('passport', event.target.files[0])
                     }}
                   />
@@ -260,7 +258,7 @@ export default function Register() {
                     // accept="image/png, image/jpeg, image/jpg"
                     // value={values['Birth Certificate']}
                     onChange={(event) => {
-                      console.log(event.target.files[0]);
+                      // console.log(event.target.files[0]);
                       setFieldValue('Birth Certificate', event.target.files[0])
                     }}
                   />

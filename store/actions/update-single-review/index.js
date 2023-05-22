@@ -20,12 +20,13 @@ export const updateSingleReviewCleanup = () => ({
   type: types.UPDATE_SINGLE_REVIEW_CLEANUP,
 })
 
-export const updateSingleReview = (id) => async (dispatch) => {
+export const updateSingleReview = (id, payload) => async (dispatch) => {
   try {
     dispatch(updateSingleReviewStart())
     const requestObj = {
       path: `/review/${id}`,
       method: 'PATCH',
+      data: payload
     }
     const data = await AxiosCall(requestObj)
     dispatch(updateSingleReviewSuccess(data))
