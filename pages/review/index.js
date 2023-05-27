@@ -1,7 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import Layout from '../../components/Layout';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import UserSidebar from '../../components/UserSidebar';
 import { useDispatch, useSelector } from 'react-redux';
 import { getReview, getReviewCleanup } from '../../store/actions/get-review';
@@ -40,10 +38,9 @@ export default function Review() {
       dispatch(getReviewCleanup());
     }
   }, [dispatch, getReviewState]);
-  console.log(review, 'data');
 
  
-  
+  console.log(review)
   
   return (
     <UserSidebar title="Review">
@@ -55,34 +52,6 @@ export default function Review() {
         ) : (
           <>
             <h1 className="mb-4 text-2xl font-bold">Users</h1>
-            <table
-              border="0"
-              cellSpacing="5"
-              cellPadding="5"
-              style={{ width: '100%', margin: '2em 0', border: 'none' }}
-            >
-              <tbody
-                style={{
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  width: '100%',
-                  justifyContent: 'space-between',
-                }}
-              >
-                <tr>
-                  <td>Min Date:</td>
-                  <td>
-                    <input name="min" id="min" type="text" autoComplete="off" />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Max Date:</td>
-                  <td>
-                    <input name="max" id="max" type="text" autoComplete="off" />
-                  </td>
-                </tr>
-              </tbody>
-            </table>
 
             <div style={{ overflowX: 'auto' }}>
               <table
@@ -120,7 +89,6 @@ export default function Review() {
                       <td>
                         <Link
                           href={`/review/${data._id}`}
-                          // style={{ textDecoration: 'none' }}
                         >
                           View
                         </Link>

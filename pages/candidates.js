@@ -48,6 +48,8 @@ export default function Candidates() {
                     <p>38years</p>
                     <h6>State of Origin</h6>
                     <p>Abia</p>
+                    <h6>Political Party</h6>
+                    <p>Youth Action Party (YAP)</p>
                     <h6>Achievements</h6>
                     <p>
                       Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -75,9 +77,11 @@ export default function Candidates() {
                   </h3>
                   <div className="text-gray-700 text-base font-normal">
                     <h6>Age</h6>
-                    <p>60 years</p>
+                    <p>55 years</p>
                     <h6>State of Origin</h6>
                     <p>Ogun</p>
+                    <h6>Political Party</h6>
+                    <p>National Peoples Congress (NPC)</p>
                     <h6>Achievements</h6>
                     <p>
                       Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -105,9 +109,11 @@ export default function Candidates() {
                   </h3>
                   <div className="text-gray-700 text-base font-normal">
                     <h6>Age</h6>
-                    <p>43 years</p>
+                    <p>60 years</p>
                     <h6>State of Origin</h6>
                     <p>Kaduna</p>
+                    <h6>Political Party</h6>
+                    <p>All Progressive Peoples Alliance (APPA)</p>
                     <h6>Achievements</h6>
                     <p>
                       Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -135,9 +141,11 @@ export default function Candidates() {
                   </h3>
                   <div className="text-gray-700 text-base font-normal">
                     <h6>Age</h6>
-                    <p>38years</p>
+                    <p>46years</p>
                     <h6>State of Origin</h6>
                     <p>Abia</p>
+                    <h6>Political Party</h6>
+                    <p>New Nigeria Peoples Congress (NNPC)</p>
                     <h6>Achievements</h6>
                     <p>
                       Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -165,9 +173,11 @@ export default function Candidates() {
                   </h3>
                   <div className="text-gray-700 text-base font-normal">
                     <h6>Age</h6>
-                    <p>60 years</p>
+                    <p>41 years</p>
                     <h6>State of Origin</h6>
                     <p>Ogun</p>
+                    <h6>Political Party</h6>
+                    <p>Change Party (CP)</p>
                     <h6>Achievements</h6>
                     <p>
                       Lorem ipsum dolor sit amet consectetur adipisicing elit.

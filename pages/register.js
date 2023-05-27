@@ -1,14 +1,14 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Layout from '../components/Layout';
 import Link from 'next/link';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
+import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { register, registerCleanup } from '../store/actions/register';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import FileBase64 from 'react-file-base64';
+import NaijaStates from 'naija-state-local-government';
 
 export default function Register() {
   const formikRef = useRef();
@@ -45,19 +45,16 @@ export default function Register() {
       if (formikRef.current) {
         formikRef.current.resetForm();
       }
-      toast.success(
-        `${registerState.data.msg}`,
-        {
-          position: 'top-center',
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'light',
-        }
-      );
+      toast.success(`${registerState.data.msg}`, {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
       setTimeout(() => {
         dispatch(registerCleanup());
         router.push('/login');
@@ -88,7 +85,7 @@ export default function Register() {
               lastName: '',
               phoneNumber: '',
               email: '',
-              'State of Origin': '',
+              'State of Origin': 'Abia',
               LGA: '',
               residence: '',
               passport: '',
@@ -170,43 +167,66 @@ export default function Register() {
                   ) : null}
                 </div>
                 <div className="mb-4">
-                  <input
+                  <label>State of Origin</label>
+                  <select
                     name="State of Origin"
                     className="w-full mt-4 py-2 pl-2 text-gray-700"
                     type="text"
-                    placeholder="State of Origin"
                     value={values['State of Origin']}
                     onChange={handleChange('State of Origin')}
                     onBlur={handleBlur('State of Origin')}
-                  />
+                  >
+                    <option>Open this to select your State of Origin</option>
+                    {NaijaStates.states().map((state) => (
+                      <option key={state} value={state}>
+                        {state}
+                      </option>
+                    ))}
+                  </select>
                   {errors['State of Origin'] && touched['State of Origin'] ? (
                     <p style={{ color: 'red' }}>{errors['State of Origin']}</p>
                   ) : null}
                 </div>
                 <div className="mb-4">
-                  <input
+                  <label>Local Government Area</label>
+                  <select
                     name="LGA"
                     className="w-full mt-4 py-2 pl-2 text-gray-700"
                     type="text"
-                    placeholder="Local Government Area"
                     value={values.LGA}
                     onChange={handleChange('LGA')}
                     onBlur={handleBlur('LGA')}
-                  />
+                  >
+                    <option>Open this to select your lga</option>
+                    {NaijaStates.lgas(`${values['State of Origin']}`).lgas.map(
+                      (lga) => (
+                        <option key={lga} value={lga}>
+                          {lga}
+                        </option>
+                      )
+                    )}
+                  </select>
                   {errors.LGA && touched.LGA ? (
                     <p style={{ color: 'red' }}>{errors.LGA}</p>
                   ) : null}
                 </div>
                 <div className="mb-4">
-                  <input
+                  <label>State of Residence</label>
+                  <select
                     name="residence"
                     className="w-full mt-4 py-2 pl-2 text-gray-700"
                     type="text"
-                    placeholder="State of Residence"
                     value={values.residence}
                     onChange={handleChange('residence')}
                     onBlur={handleBlur('residence')}
-                  />
+                  >
+                    <option>Open this to select your State of Residence</option>
+                    {NaijaStates.states().map((residence) => (
+                      <option key={residence} value={residence}>
+                        {residence}
+                      </option>
+                    ))}
+                  </select>
                   {errors.residence && touched.residence ? (
                     <p style={{ color: 'red' }}>{errors.residence}</p>
                   ) : null}
@@ -214,33 +234,14 @@ export default function Register() {
                 <div className="mb-4">
                   <label htmlFor="passport">Upload your passport:</label>
                   <br />
-                  {/* <input
-                    name="passport"
-                    className="w-full mt-4 py-2 pl-2 text-gray-700"
-                    type="file"
-                    accept="image/*,.pdf"
-                    // accept="image/png, image/jpeg, image/jpg"
-                    // value={values.passport}
-                    onChange={handleChange('passport')}
-                    onBlur={handleBlur('passport')}
-                  /> */}
                   <input
                     className="w-full mt-4 py-2 pl-2 text-gray-700"
                     type="file"
                     name="passport"
-                    // value={values.passport}
                     onChange={(event) => {
-                      // console.log(event.target.files[0]);
-                      setFieldValue('passport', event.target.files[0])
+                      setFieldValue('passport', event.target.files[0]);
                     }}
                   />
-                  {/* <FileBase64
-                    name="passport"
-                    className="w-full mt-4 py-2 pl-2 text-gray-700"
-                    type="file"
-                    multiple={false}
-                    onDone={({ base64 }) => setFieldValue('passport', base64)}
-                  /> */}
                   {errors.passport && touched.passport ? (
                     <p style={{ color: 'red' }}>{errors.passport}</p>
                   ) : null}
@@ -255,20 +256,10 @@ export default function Register() {
                     className="w-full mt-4 py-2 pl-2 text-gray-700"
                     type="file"
                     accept="image/*,.pdf"
-                    // accept="image/png, image/jpeg, image/jpg"
-                    // value={values['Birth Certificate']}
                     onChange={(event) => {
-                      // console.log(event.target.files[0]);
-                      setFieldValue('Birth Certificate', event.target.files[0])
+                      setFieldValue('Birth Certificate', event.target.files[0]);
                     }}
                   />
-                  {/* <FileBase64
-                    name="Birth Certificate"
-                    className="w-full mt-4 py-2 pl-2 text-gray-700"
-                    type="file"
-                    multiple={false}
-                    onDone={({ base64 }) => setFieldValue('Birth Certificate', base64)}
-                  /> */}
                   {errors['Birth Certificate'] &&
                   touched['Birth Certificate'] ? (
                     <p style={{ color: 'red' }}>

@@ -8,7 +8,8 @@ import getSingleReview from './get-single-review';
 import updateSingleReview from './update-single-review';
 import getVotesData from './get-votes-data';
 import vote from './vote';
-import getFile from './get-file'
+import getFile from './get-file';
+import getProfile from './get-profile';
 
 const baseReducers = combineReducers({
   register,
@@ -21,6 +22,7 @@ const baseReducers = combineReducers({
   getVotesData,
   vote,
   getFile,
+  getProfile,
 });
 
 export default baseReducers;

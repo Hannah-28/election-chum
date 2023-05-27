@@ -67,3 +67,10 @@ export const getFile = {
   data: [],
   error: null,
 };
+
+export const getProfile = {
+  isLoading: false,
+  isSuccessful: false,
+  data: [],
+  error: null,
+};

@@ -23,8 +23,7 @@ export default function SingleReview() {
   const dispatch = useDispatch();
   const getSingleReviewState = useSelector((s) => s.getSingleReview);
   const updateSingleReviewState = useSelector((s) => s.updateSingleReview);
-  const getFileState = useSelector((s) => s.getFile);
-  // const navigate = useNavigate();
+  const getFileState = useSelector((s) => s.getFile);;
   const [show, setShow] = useState(false);
   const [status, setStatus] = useState('');
   const [comment, setComment] = useState('');
@@ -38,7 +37,6 @@ export default function SingleReview() {
   const [imageUrl, setImageUrl] = useState('');
   useEffect(() => {
     dispatch(getSingleReview(id));
-    // dispatch(updateSingleReview(id));
   }, [dispatch, id]);
 
   useEffect(() => {
@@ -59,25 +57,6 @@ export default function SingleReview() {
     }
   }, [getFileState, dispatch]);
 
-  // useEffect(() => {
-  //   if (getFileState.isSuccessful) {
-  //     // setFile(getFileState.data);
-  //     const test = async () => {
-  //       await getFileState.data
-  //         .blob()
-  //         .then((blob) => {
-  //           const url = URL.createObjectURL(blob);
-  //           console.log(url, 'URL');
-  //           setFile(url);
-  //         })
-  //         .catch((e) => console.log(e, 'from blobing'));
-  //     };
-  //     test();
-  //     dispatch(getFileCleanUp());
-  //   } else if (getFile.error) {
-  //     dispatch(getFileCleanUp());
-  //   }
-  // }, [getFileState, dispatch]);
 
   useEffect(() => {
     if (updateSingleReviewState.isSuccessful) {
@@ -117,17 +96,19 @@ export default function SingleReview() {
       comment: comment,
     };
     dispatch(updateSingleReview(id, body));
-    // addToast(enableToast)
   };
   const passport = () => {
     dispatch(getFile(singleReview.details.passport.passportID));
   };
-
-  console.log(file, 'File');
+  const birthCert = () => {
+    if(singleReview['details']) {
+      dispatch(getFile(singleReview['details']['Birth Certificate']['Birth CertificateID']));
+    }
+  };
 
   return (
     <UserSidebar title="Details">
-      <div className="my-10">
+      <div className="h-full my-10">
         {singleReview?.details === undefined ? (
           <>
             <div className="spinner-border" role="status"></div>
@@ -166,33 +147,30 @@ export default function SingleReview() {
               <div className="my-4">
                 <h6>Passport</h6>
                 <button
-                  // type="submit"
-                  className="border-black text-white hover:bg-black px-7 py-3 rounded-md bg-zinc-900 text-base font-medium"
+                  className="border-black text-white hover:bg-black px-3 py-2 rounded-md bg-zinc-900 text-base font-medium"
                   onClick={() => {
                     passport();
-
-                    // dispatch(getFile(singleReview?.details?.passport?.passportID))
                   }}
                 >
-                  view
+                  View
                 </button>
                 <img src={file} alt="passport" />
               </div>
               <div className="my-4">
-                <h6>Birth Certificate</h6>
+              <h6>Birth Certificate</h6>
+                <button
+                  className="border-black text-white hover:bg-black px-3 py-2 rounded-md bg-zinc-900 text-base font-medium"
+                  onClick={() => {
+                    birthCert();
+                  }}
+                >
+                  View
+                </button>
                 <img src={singleReview.details.passport} alt="passport" />
               </div>
+              
               <button
-                type="submit"
-                className="border-black text-white hover:bg-black px-7 py-3 rounded-md bg-zinc-900 text-base font-medium"
-                onClick={() => {
-                  update(id);
-                }}
-              >
-                Proceed
-              </button>
-              <button
-                className="border-black text-white hover:bg-black px-7 py-3 rounded-md bg-zinc-900 text-base font-medium"
+                className="border-black text-white hover:bg-black px-3 py-2 rounded-md bg-zinc-900 text-base font-medium"
                 onClick={handleShow}
               >
                 Review
@@ -215,7 +193,7 @@ export default function SingleReview() {
               id="status"
               onChange={(value) => setStatus(value.target.value)}
             >
-              <option value="">Open this select menu</option>
+              <option value="">Open this to select status</option>
               <option value="approved">Approved</option>
               <option value="declined">Declined</option>
             </select>
@@ -240,7 +218,7 @@ export default function SingleReview() {
             onClick={() => {
               update(id);
             }}
-            disabled={status === '' || comment === ''}
+            disabled={status === '' || comment === '' }
           >
             Proceed
           </Button>

@@ -25,7 +25,7 @@ export const verify = (payload) => async (dispatch) => {
   try {
     dispatch(verifyStart());
     const votersID = await Cookies.get('ID')
-    console.log(votersID, 'votersID');
+    // console.log(votersID, 'votersID');
     const requestObj = {
       path: `/verify?votersID=${votersID}`,
       method: 'POST',

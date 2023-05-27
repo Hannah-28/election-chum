@@ -1,31 +1,30 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
+import UserSidebar from '../components/UserSidebar';
+import { vote, voteCleanup } from '../store/actions/vote';
+import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { useDispatch, useSelector } from 'react-redux';
-import { verify, verifyCleanup } from '../store/actions/verify';
-import { useRouter } from 'next/router';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Layout from '../components/Layout';
 
 
-const Verify = () => {
-  const router = useRouter();
-  const dispatch = useDispatch();
+export default function Vote() {
   const formikRef = useRef();
-  const verifyState = useSelector((s) => s.verify);
-  const [verifyError, setVerifyError] = useState(null);
+  const dispatch = useDispatch();
+  const voteState = useSelector((s) => s.vote);
+  const router = useRouter();
 
   const validationSchema = Yup.object().shape({
-    otp: Yup.string().trim().required('OTP is required'),
+    party: Yup.string().trim().required('Party is required'),
   });
 
   useEffect(() => {
-    if (verifyState.isSuccessful) {
+    if (voteState.isSuccessful) {
       if (formikRef.current) {
         formikRef.current.resetForm();
       }
-      toast.success(`Welcome back!!!`, {
+      toast.success(`${voteState.data.msg}`, {
         position: 'top-center',
         autoClose: 3000,
         hideProgressBar: false,
@@ -36,12 +35,11 @@ const Verify = () => {
         theme: 'light',
       });
       setTimeout(() => {
-        dispatch(verifyCleanup());
+        dispatch(voteCleanup());
         router.push('/candidates');
       }, 3000);
-    } else if (verifyState.error) {
-      setVerifyError('Invalid OTP');
-      toast.error(`${verifyError}!!!`, {
+    } else if (voteState.error) {
+      toast.error(`You can only vote once!`, {
         position: 'top-center',
         autoClose: 3000,
         hideProgressBar: false,
@@ -51,23 +49,21 @@ const Verify = () => {
         progress: undefined,
         theme: 'light',
       });
-
-      dispatch(verifyCleanup());
+      dispatch(voteCleanup());
     }
-  }, [verifyState, dispatch, router, verifyError]);
+  }, [voteState, dispatch, router]);
+
   return (
-    <Layout title="Verify">
-      <div className="max-w-6xl mx-auto px-8 my-10 register">
+    <UserSidebar title="Vote">
+      <div className="h-screen my-full">
         <form className="shadow-md bg-gray-50 rounded-md p-7 my-10">
-          <h1 className="mb-4 text-2xl font-bold">Verify</h1>
-          <p className="text-medium-emphasis">Enter the secure pin sent to your mail</p>
+          <h1 className="mb-4 text-2xl font-bold">Details</h1>
           <Formik
             initialValues={{
-              otp: '',
+              party:'YAP'
             }}
             onSubmit={(values, { setSubmitting }) => {
-              setVerifyError(null);
-              dispatch(verify(values));
+              dispatch(vote(values));
               setSubmitting(false);
             }}
             validationSchema={validationSchema}
@@ -83,27 +79,37 @@ const Verify = () => {
               handleBlur,
             }) => (
               <>
-                <div className="mb-10">
-                  <input
-                    name="otp"
+                <div className="mb-4">
+                  <label>Party</label>
+                  <select
+                    name="party"
                     className="w-full mt-4 py-2 pl-2 text-gray-700"
-                    type="tel"
-                    placeholder="otp"
-                    value={values.otp}
-                    onChange={handleChange('otp')}
-                    onBlur={handleBlur('otp')}
-                  />
-                  {errors.otp && touched.otp ? (
-                    <p style={{ color: 'red' }}>{errors.otp}</p>
+                    type="text"
+                    value={values.party}
+                    onChange={handleChange('party')}
+                    onBlur={handleBlur('party')}
+                  >
+                    <option value="YAP">Youth Action Party (YAP)</option>
+                    <option value="NPC">National Peoples Congress (NPC)</option>
+                    <option vlaue="APPA">
+                      All Progressive Peoples Alliance (APPA)
+                    </option>
+                    <option value="NNPC">
+                      New Nigeria Peoples Congress (NNPC)
+                    </option>
+                    <option value="CP">Change Party (CP)</option>
+                  </select>
+                  {errors.residence && touched.residence ? (
+                    <p style={{ color: 'red' }}>{errors.residence}</p>
                   ) : null}
                 </div>
                 <button
-                  disabled={!isValid || verifyState.isLoading}
                   type="submit"
                   className="border-black text-white hover:bg-black px-7 py-3 rounded-md bg-zinc-900 text-base font-medium"
                   onClick={handleSubmit}
+                  disabled={!isValid || voteState.isLoading}
                 >
-                  Proceed
+                  Submit
                 </button>
               </>
             )}
@@ -123,8 +129,6 @@ const Verify = () => {
         pauseOnHover
         theme="light"
       />
-    </Layout>
+    </UserSidebar>
   );
-};
-
-export default Verify;
+}

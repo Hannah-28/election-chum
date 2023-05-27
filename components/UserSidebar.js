@@ -33,31 +33,37 @@ export default function UserSidebar({ title, children }) {
 
             <MenuItem
               routerLink={<Link href="/candidates" />}
-              className="text-indigo-500 hover:text-black my-4 text-base font-medium"
+              className="text-indigo-500 hover:text-black my-3 text-base font-medium"
             >
               Candidates
             </MenuItem>
             <MenuItem
               routerLink={<Link href="/review" />}
-              className="text-indigo-500 hover:text-black my-4 text-base font-medium"
+              className="text-indigo-500 hover:text-black my-3 text-base font-medium"
             >
               Review
             </MenuItem>
             <MenuItem
               routerLink={<Link href="/vote" />}
-              className="text-indigo-500 hover:text-black my-4 text-base font-medium"
+              className="text-indigo-500 hover:text-black my-3 text-base font-medium"
             >
               Vote
             </MenuItem>
             <MenuItem
               routerLink={<Link href="/results" />}
-              className="text-indigo-500 hover:text-black my-4 text-base font-medium"
+              className="text-indigo-500 hover:text-black my-3 text-base font-medium"
             >
               Results
             </MenuItem>
             <MenuItem
+              routerLink={<Link href="/profile" />}
+              className="text-indigo-500 hover:text-black my-3 text-base font-medium"
+            >
+              Profile
+            </MenuItem>
+            <MenuItem
               routerLink={<Link href="/login" />}
-              className="text-indigo-500 hover:text-black my-4 text-base font-medium"
+              className="text-indigo-500 hover:text-black my-3 text-base font-medium"
             >
               Logout
             </MenuItem>
