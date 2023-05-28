@@ -3,6 +3,9 @@ import Link from 'next/link';
 import UserSidebar from '../../components/UserSidebar';
 import { useDispatch, useSelector } from 'react-redux';
 import { getReview, getReviewCleanup } from '../../store/actions/get-review';
+import { ToastContainer, toast } from 'react-toastify';
+import { useRouter } from 'next/router';
+import 'react-toastify/dist/ReactToastify.css';
 
 // import './../styles.css'
 
@@ -24,6 +27,7 @@ export default function Review() {
   const dispatch = useDispatch();
   const getReviewState = useSelector((s) => s.getReview);
   const [review, setReview] = useState([]);
+  const router = useRouter();
 
   useEffect(() => {
     dispatch(getReview());
@@ -31,17 +35,45 @@ export default function Review() {
 
   useEffect(() => {
     if (getReviewState.isSuccessful) {
-      setReview(getReviewState.data.pendingUsers);
-      dispatch(getReviewCleanup());
+      if (getReviewState.data.pendingUsers.length === 0) {
+        toast.error(`No pending user to be reviewed!!!`, {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        });
+        setTimeout(() => {
+          dispatch(getReviewCleanup());
+          router.push('/candidates');
+        }, 3000);
+      } else {
+        setReview(getReviewState.data.pendingUsers);
+        dispatch(getReviewCleanup());
+      }
     } else if (getReviewState.error) {
-      console.log('error');
-      dispatch(getReviewCleanup());
+      toast.error(`Only an admin has access to this section!!!`, {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
+      setTimeout(() => {
+        dispatch(getReviewCleanup());
+        router.push('/candidates');
+      }, 3000);
     }
-  }, [dispatch, getReviewState]);
+  }, [dispatch, getReviewState, router]);
 
- 
-  console.log(review)
-  
+  console.log(review);
+
   return (
     <UserSidebar title="Review">
       <div className="h-screen my-10">
@@ -82,16 +114,15 @@ export default function Review() {
                   {review.map((data, i) => (
                     <tr key={i} className="table-success">
                       <td>
-                        {data?.firstName} {data?.lastName}
+                        {data?.firstName.charAt(0).toUpperCase() +
+                          data?.firstName.slice(1)}{' '}
+                        {data?.lastName.charAt(0).toUpperCase() +
+                          data?.lastName.slice(1)}
                       </td>
                       <td>{moment(data.createdDate).format('MM/DD/YYYY')}</td>
                       <td>{data.status}</td>
                       <td>
-                        <Link
-                          href={`/review/${data._id}`}
-                        >
-                          View
-                        </Link>
+                        <Link href={`/review/${data._id}`}>View</Link>
                       </td>
                     </tr>
                   ))}
@@ -101,6 +132,19 @@ export default function Review() {
           </>
         )}
       </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        limit={1}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </UserSidebar>
   );
 }

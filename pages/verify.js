@@ -14,7 +14,6 @@ const Verify = () => {
   const dispatch = useDispatch();
   const formikRef = useRef();
   const verifyState = useSelector((s) => s.verify);
-  const [verifyError, setVerifyError] = useState(null);
 
   const validationSchema = Yup.object().shape({
     otp: Yup.string().trim().required('OTP is required'),
@@ -40,8 +39,8 @@ const Verify = () => {
         router.push('/candidates');
       }, 3000);
     } else if (verifyState.error) {
-      setVerifyError('Invalid OTP');
-      toast.error(`${verifyError}!!!`, {
+      
+      toast.error(`Invalid OTP!!!`, {
         position: 'top-center',
         autoClose: 3000,
         hideProgressBar: false,
@@ -54,7 +53,7 @@ const Verify = () => {
 
       dispatch(verifyCleanup());
     }
-  }, [verifyState, dispatch, router, verifyError]);
+  }, [verifyState, dispatch, router]);
   return (
     <Layout title="Verify">
       <div className="max-w-6xl mx-auto px-8 my-10 register">
@@ -66,7 +65,6 @@ const Verify = () => {
               otp: '',
             }}
             onSubmit={(values, { setSubmitting }) => {
-              setVerifyError(null);
               dispatch(verify(values));
               setSubmitting(false);
             }}
@@ -100,7 +98,7 @@ const Verify = () => {
                 <button
                   disabled={!isValid || verifyState.isLoading}
                   type="submit"
-                  className="border-black text-white hover:bg-black px-7 py-3 rounded-md bg-zinc-900 text-base font-medium"
+                  className="border-black text-white hover:bg-black px-3 py-2 rounded-md bg-zinc-900 text-base font-medium"
                   onClick={handleSubmit}
                 >
                   Proceed

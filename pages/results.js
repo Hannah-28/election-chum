@@ -6,6 +6,9 @@ import {
 } from '../store/actions/get-votes-data';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useDispatch, useSelector } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import { useRouter } from 'next/router';
+import 'react-toastify/dist/ReactToastify.css';
 import { CSVLink } from 'react-csv';
 import {
   Chart as ChartJS,
@@ -31,6 +34,7 @@ export default function Results() {
   const dispatch = useDispatch();
   const getVotesDataState = useSelector((s) => s.getVotesData);
   const [results, setResults] = useState([]);
+  const router = useRouter();
 
   useEffect(() => {
     dispatch(getVotesData());
@@ -41,10 +45,25 @@ export default function Results() {
       setResults(getVotesDataState.data);
       dispatch(getVotesDataCleanup());
     } else if (getVotesDataState.error) {
-      console.log('error');
-      dispatch(getVotesDataCleanup());
+      toast.error(
+        `You need to vote before you can have access to the votes data. Thanks`,
+        {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        }
+      );
+      setTimeout(() => {
+        dispatch(getVotesDataCleanup());
+        router.push('/vote');
+      }, 3000);
     }
-  }, [dispatch, getVotesDataState]);
+  }, [dispatch, getVotesDataState, router]);
 
   const options = {
     responsive: true,
@@ -54,7 +73,7 @@ export default function Results() {
       },
       title: {
         display: true,
-        text: 'Votes Results',
+        text: 'Votes By Party',
       },
     },
   };
@@ -69,7 +88,7 @@ export default function Results() {
   });
 
   const data = {
-    labels: ['Party Votes'],
+    labels: [`Party Votes (Total Votes = ${results?.totalVotes})`],
     datasets: [
       {
         label: `${labels?.at(0)}`,
@@ -106,25 +125,69 @@ export default function Results() {
   const stateCount = results?.votesByState?.map((data) => {
     return data.count;
   });
-  const headersCustomers = [
-    { label: 'Name of State', key: 'owner.firstname' },
-    { label: 'Count', key: 'owner.lastname' },
+
+  const headersVotesByParty = [
+    { label: 'Parties', key: '_id' },
+    { label: 'Votes', key: 'count' },
   ];
 
+  const csvVotesByPartyReport = {
+    filename: 'VotesByParty.csv',
+    headers: headersVotesByParty,
+    data: results?.votesByParty,
+  };
+
+  const headersVotesByState = [
+    { label: 'States', key: '_id' },
+    { label: 'Votes', key: 'count' },
+  ];
+
+  const csvVotesByStateReport = {
+    filename: 'VotesByState.csv',
+    headers: headersVotesByState,
+    data: results?.votesByState,
+  };
+
+  console.log(results);
   console.log(state);
   console.log(stateCount);
 
   return (
     <UserSidebar title="Results">
-      <div className="h-screen my-10">
+      <div className="h-full my-10">
         {results.length === 0 ? (
           <>
             <div className="spinner-border" role="status"></div>
           </>
         ) : (
-          <div>
+          <>
+            <h1 className="mb-4 text-2xl font-bold">Results</h1>
+            <div
+              style={{
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'right',
+                marginBottom: '2em',
+              }}
+            >
+              <CSVLink {...csvVotesByPartyReport}>Download</CSVLink>
+            </div>
+
             <Bar options={options} data={data} />
-            <div style={{ overflowX: 'auto' }}>
+
+            <div style={{ width: '100%', marginTop: '2em' }}>
+              <h6 className="text-center w-full">Votes By State</h6>
+              <div
+                style={{
+                  width: '100%',
+                  display: 'flex',
+                  justifyContent: 'right',
+                  marginBottom: '2em',
+                }}
+              >
+                <CSVLink {...csvVotesByStateReport}>Download</CSVLink>
+              </div>
+              <div style={{ overflowX: 'auto' }}>
               <table
                 width="100%"
                 className="display"
@@ -146,19 +209,37 @@ export default function Results() {
                 </thead>
                 <tbody>
                   <tr>
-                    <td>{state.map((data,i) => (
-                      <tr key={i}>{data}</tr>
-                    ))}</td>
-                    <td>{stateCount.map((data,i) => (
-                      <tr key={i}>{data}</tr>
-                    ))}</td>
+                    <td>
+                      {state.map((data, i) => (
+                        <tr key={i}>{data}</tr>
+                      ))}
+                    </td>
+                    <td>
+                      {stateCount.map((data, i) => (
+                        <tr key={i}>{data}</tr>
+                      ))}
+                    </td>
                   </tr>
                 </tbody>
               </table>
+              </div>
             </div>
-          </div>
+          </>
         )}
       </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        limit={1}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </UserSidebar>
   );
 }

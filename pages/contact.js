@@ -102,7 +102,7 @@ export default function Contact() {
             />
           </div>
           <div>
-            <button className="border-black text-white hover:bg-black px-7 py-3 rounded-md bg-zinc-900 text-base font-medium">
+            <button className="border-black text-white hover:bg-black px-3 py-2 rounded-md bg-zinc-900 text-base font-medium">
               Submit
             </button>
           </div>

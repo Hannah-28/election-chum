@@ -36,7 +36,7 @@ export default function Vote() {
       });
       setTimeout(() => {
         dispatch(voteCleanup());
-        router.push('/candidates');
+        router.push('/results');
       }, 3000);
     } else if (voteState.error) {
       toast.error(`You can only vote once!`, {
@@ -49,6 +49,10 @@ export default function Vote() {
         progress: undefined,
         theme: 'light',
       });
+      setTimeout(() => {
+        dispatch(voteCleanup());
+        router.push('/results');
+      }, 3000);
       dispatch(voteCleanup());
     }
   }, [voteState, dispatch, router]);
@@ -79,8 +83,8 @@ export default function Vote() {
               handleBlur,
             }) => (
               <>
-                <div className="mb-4">
-                  <label>Party</label>
+                <div className="mb-10">
+                  <label>Carefully select your preferred party</label>
                   <select
                     name="party"
                     className="w-full mt-4 py-2 pl-2 text-gray-700"
@@ -105,7 +109,7 @@ export default function Vote() {
                 </div>
                 <button
                   type="submit"
-                  className="border-black text-white hover:bg-black px-7 py-3 rounded-md bg-zinc-900 text-base font-medium"
+                  className="border-black text-white hover:bg-black px-3 py-2 rounded-md bg-zinc-900 text-base font-medium"
                   onClick={handleSubmit}
                   disabled={!isValid || voteState.isLoading}
                 >

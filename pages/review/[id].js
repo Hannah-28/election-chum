@@ -12,7 +12,7 @@ import {
 } from '../../store/actions/update-single-review';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Image from 'next/image';
-import { ToastContainer, toast } from 'react-toastify';
+
 import { getFile, getFileCleanUp } from '../../store/actions/get-file';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -23,7 +23,7 @@ export default function SingleReview() {
   const dispatch = useDispatch();
   const getSingleReviewState = useSelector((s) => s.getSingleReview);
   const updateSingleReviewState = useSelector((s) => s.updateSingleReview);
-  const getFileState = useSelector((s) => s.getFile);;
+  const getFileState = useSelector((s) => s.getFile);
   const [show, setShow] = useState(false);
   const [status, setStatus] = useState('');
   const [comment, setComment] = useState('');
@@ -57,36 +57,18 @@ export default function SingleReview() {
     }
   }, [getFileState, dispatch]);
 
-
   useEffect(() => {
     if (updateSingleReviewState.isSuccessful) {
       setUpdate(updateSingleReviewState.data);
-      toast.success(`${updateSingleReviewState.data.msg}`, {
-        position: 'top-center',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'light',
-      });
       setTimeout(() => {
         dispatch(updateSingleReviewCleanup());
         router.push('/review');
       }, 3000);
     } else if (updateSingleReview.error) {
-      toast.error(`${updateSingleReviewState.error}`, {
-        position: 'top-center',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'light',
-      });
-      dispatch(updateSingleReviewCleanup());
+      setTimeout(() => {
+        dispatch(updateSingleReviewCleanup());
+        router.push('/review');
+      }, 3000);
     }
   }, [updateSingleReviewState, dispatch, router]);
 
@@ -101,8 +83,12 @@ export default function SingleReview() {
     dispatch(getFile(singleReview.details.passport.passportID));
   };
   const birthCert = () => {
-    if(singleReview['details']) {
-      dispatch(getFile(singleReview['details']['Birth Certificate']['Birth CertificateID']));
+    if (singleReview['details']) {
+      dispatch(
+        getFile(
+          singleReview['details']['Birth Certificate']['Birth CertificateID']
+        )
+      );
     }
   };
 
@@ -120,8 +106,10 @@ export default function SingleReview() {
               <div className="my-4">
                 <h6>Name of User</h6>
                 <p>
-                  {singleReview.details.firstName}{' '}
-                  {singleReview.details.lastName}
+                  {singleReview.details.firstName.charAt(0).toUpperCase() +
+                    singleReview.details.firstName.slice(1)}{' '}
+                  {singleReview.details.lastName.charAt(0).toUpperCase() +
+                    singleReview.details.lastName.slice(1)}
                 </p>
               </div>
               <div className="my-4">
@@ -157,7 +145,7 @@ export default function SingleReview() {
                 <img src={file} alt="passport" />
               </div>
               <div className="my-4">
-              <h6>Birth Certificate</h6>
+                <h6>Birth Certificate</h6>
                 <button
                   className="border-black text-white hover:bg-black px-3 py-2 rounded-md bg-zinc-900 text-base font-medium"
                   onClick={() => {
@@ -168,7 +156,7 @@ export default function SingleReview() {
                 </button>
                 <img src={singleReview.details.passport} alt="passport" />
               </div>
-              
+
               <button
                 className="border-black text-white hover:bg-black px-3 py-2 rounded-md bg-zinc-900 text-base font-medium"
                 onClick={handleShow}
@@ -181,7 +169,7 @@ export default function SingleReview() {
       </div>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Review</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div>
@@ -218,25 +206,12 @@ export default function SingleReview() {
             onClick={() => {
               update(id);
             }}
-            disabled={status === '' || comment === '' }
+            disabled={status === '' || comment === ''}
           >
             Proceed
           </Button>
         </Modal.Footer>
       </Modal>
-      <ToastContainer
-        position="top-center"
-        autoClose={3000}
-        limit={1}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
     </UserSidebar>
   );
 }

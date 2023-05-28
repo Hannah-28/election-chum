@@ -114,7 +114,7 @@ export default function Login() {
                 </div>
                 <button
                   type="submit"
-                  className="border-black text-white hover:bg-black px-7 py-3 rounded-md bg-zinc-900 text-base font-medium"
+                  className="border-black text-white hover:bg-black px-3 py-2 rounded-md bg-zinc-900 text-base font-medium"
                   onClick={handleSubmit}
                   disabled={!isValid || loginState.isLoading}
                 >
