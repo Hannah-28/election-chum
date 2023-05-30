@@ -45,7 +45,7 @@ export default function Register() {
       if (formikRef.current) {
         formikRef.current.resetForm();
       }
-      toast.success(`${registerState.data.msg}`, {
+      toast.success(`Check your mail in a few days to confirm if you're eligible to vote or not. Thanks`, {
         position: 'top-center',
         autoClose: 3000,
         hideProgressBar: false,
