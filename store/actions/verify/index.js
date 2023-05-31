@@ -25,13 +25,11 @@ export const verify = (payload) => async (dispatch) => {
   try {
     dispatch(verifyStart());
     const votersID = await Cookies.get('ID')
-    // console.log(votersID, 'votersID');
     const requestObj = {
       path: `/verify?votersID=${votersID}`,
       method: 'POST',
       data: payload,
     };
-    // console.log(Cookies.get('tok'), 'hiii')
     const data = await AxiosCall(requestObj);
     dispatch(verifySuccess(data));
   } catch (err) {

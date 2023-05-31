@@ -21,7 +21,6 @@ export default function Profile() {
     }
   }, [dispatch, getProfileState]);
 
-  console.log(profile);
 
   return (
     <UserSidebar title="Profile">

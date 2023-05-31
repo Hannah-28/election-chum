@@ -72,6 +72,8 @@ export default function SingleReview() {
     }
   }, [updateSingleReviewState, dispatch, router]);
 
+  console.log(file)
+
   const update = () => {
     const body = {
       status: status,

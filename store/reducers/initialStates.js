@@ -74,3 +74,11 @@ export const getProfile = {
   data: [],
   error: null,
 };
+
+export const getUsers = {
+  isLoading: false,
+  isSuccessful: false,
+  data: [],
+  error: null,
+};
+

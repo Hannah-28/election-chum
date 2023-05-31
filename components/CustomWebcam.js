@@ -1,16 +1,21 @@
 import Webcam from 'react-webcam';
 import { useCallback, useRef, useState } from 'react'; // import useRef
+import { useRouter } from 'next/router';
 
 const CustomWebcam = () => {
   const webcamRef = useRef(null); // create a webcam reference
   const [imgSrc, setImgSrc] = useState(null); // initialize it
   const [mirrored, setMirrored] = useState(false);
+  const router = useRouter();
 
   // create a capture function
   const capture = useCallback(() => {
     const imageSrc = webcamRef.current.getScreenshot();
     setImgSrc(imageSrc);
-  }, [webcamRef]);
+    setTimeout(() => {
+      router.push('/vote');
+    }, 3000);
+  }, [webcamRef, router]);
 
   const retake = () => {
     setImgSrc(null);

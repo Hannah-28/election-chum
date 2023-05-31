@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
-import UserSidebar from '../../components/UserSidebar';
+import UserSidebar from '../components/UserSidebar';
 import { useDispatch, useSelector } from 'react-redux';
-import { getReview, getReviewCleanup } from '../../store/actions/get-review';
+import { getUsers, getUsersCleanup } from '../store/actions/get-users';
 import { ToastContainer, toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import 'react-toastify/dist/ReactToastify.css';
@@ -25,36 +25,19 @@ import moment from 'moment';
 
 export default function Review() {
   const dispatch = useDispatch();
-  const getReviewState = useSelector((s) => s.getReview);
-  const [review, setReview] = useState([]);
+  const getUsersState = useSelector((s) => s.getUsers);
+  const [users, setUsers] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
-    dispatch(getReview());
+    dispatch(getUsers());
   }, [dispatch]);
 
   useEffect(() => {
-    if (getReviewState.isSuccessful) {
-      if (getReviewState.data.pendingUsers.length === 0) {
-        toast.error(`No pending user to be reviewed!!!`, {
-          position: 'top-center',
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'light',
-        });
-        setTimeout(() => {
-          dispatch(getReviewCleanup());
-          router.push('/candidates');
-        }, 3000);
-      } else {
-        setReview(getReviewState.data.pendingUsers);
-        dispatch(getReviewCleanup());
-      }
-    } else if (getReviewState.error) {
+    if (getUsersState.isSuccessful) {
+      setReview(getUsers.data);
+      dispatch(getUsersCleanup());
+    } else if (getUsersState.error) {
       toast.error(`Only an admin has access to this section!!!`, {
         position: 'top-center',
         autoClose: 3000,
@@ -66,17 +49,18 @@ export default function Review() {
         theme: 'light',
       });
       setTimeout(() => {
-        dispatch(getReviewCleanup());
+        dispatch(getUsersCleanup());
         router.push('/candidates');
       }, 3000);
     }
-  }, [dispatch, getReviewState, router]);
+  }, [dispatch, getUsersState, router]);
 
+  console.log(users);
 
   return (
     <UserSidebar title="Review">
       <div className="h-screen my-10">
-        {review.length === 0 ? (
+        {users.length === 0 ? (
           <>
             <div className="spinner-border" role="status"></div>
           </>

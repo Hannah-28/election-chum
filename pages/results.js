@@ -148,9 +148,7 @@ export default function Results() {
     data: results?.votesByState,
   };
 
-  console.log(results);
-  console.log(state);
-  console.log(stateCount);
+  
 
   return (
     <UserSidebar title="Results">

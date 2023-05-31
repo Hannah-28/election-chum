@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import UserSidebar from '../components/UserSidebar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Candidates() {
   const [isLoading, setIsLoading] = useState(true);
@@ -22,6 +23,16 @@ export default function Candidates() {
         ) : (
           <>
             <h1 className="mb-4 text-2xl font-bold">Candidates</h1>
+            <div
+              style={{
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'right',
+                marginBottom: '2em',
+              }}
+            >
+                <Link href={`/test`} className="border-black text-white hover:bg-black px-3 py-2 rounded-md bg-zinc-900 text-base font-medium">Vote</Link>
+            </div>
             <div>
               <h6>
                 Below are the candidates for our upcoming election and this is

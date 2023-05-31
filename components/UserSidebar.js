@@ -38,12 +38,12 @@ export default function UserSidebar({ title, children }) {
               Candidates
             </MenuItem>
             
-            <MenuItem
+            {/* <MenuItem
               routerLink={<Link href="/vote" />}
               className="text-indigo-500 hover:text-black my-3 text-base font-medium"
             >
               Vote
-            </MenuItem>
+            </MenuItem> */}
             <MenuItem
               routerLink={<Link href="/results" />}
               className="text-indigo-500 hover:text-black my-3 text-base font-medium"
@@ -61,6 +61,12 @@ export default function UserSidebar({ title, children }) {
               className="text-indigo-500 hover:text-black my-3 text-base font-medium"
             >
               Review
+            </MenuItem>
+            <MenuItem
+              routerLink={<Link href="/users" />}
+              className="text-indigo-500 hover:text-black my-3 text-base font-medium"
+            >
+              Users
             </MenuItem>
             <MenuItem
               routerLink={<Link href="/login" />}

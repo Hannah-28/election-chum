@@ -10,6 +10,7 @@ import getVotesData from './get-votes-data';
 import vote from './vote';
 import getFile from './get-file';
 import getProfile from './get-profile';
+import getUsers from './get-users';
 
 const baseReducers = combineReducers({
   register,
@@ -23,6 +24,7 @@ const baseReducers = combineReducers({
   vote,
   getFile,
   getProfile,
+  getUsers,
 });
 
 export default baseReducers;
