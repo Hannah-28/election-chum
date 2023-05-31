@@ -145,6 +145,7 @@ export default function SingleReview() {
                   View
                 </button>
                 <img src={file} alt="passport" />
+                {/* <img src='https://shy-plum-swordfish-sari.cyclic.app/api/file/63dd75d970232d582c3442b1' alt="passport" /> */}
               </div>
               <div className="my-4">
                 <h6>Birth Certificate</h6>

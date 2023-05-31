@@ -111,7 +111,7 @@ export default function Vote() {
                       <option value="NPC">
                         National Peoples Congress (NPC)
                       </option>
-                      <option vlaue="APPA">
+                      <option value="APPA">
                         All Progressive Peoples Alliance (APPA)
                       </option>
                       <option value="NNPC">

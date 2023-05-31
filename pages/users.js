@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from 'react';
-import Link from 'next/link';
 import UserSidebar from '../components/UserSidebar';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUsers, getUsersCleanup } from '../store/actions/get-users';
@@ -21,7 +20,6 @@ import 'react-toastify/dist/ReactToastify.css';
 // import "datatables.net-dt/js/dataTables.dataTables"
 // import "datatables.net-dt/css/jquery.dataTables.min.css"
 
-import moment from 'moment';
 
 export default function Review() {
   const dispatch = useDispatch();
@@ -35,7 +33,7 @@ export default function Review() {
 
   useEffect(() => {
     if (getUsersState.isSuccessful) {
-      setReview(getUsers.data);
+      setUsers(getUsersState.data);
       dispatch(getUsersCleanup());
     } else if (getUsersState.error) {
       toast.error(`Only an admin has access to this section!!!`, {
@@ -55,7 +53,6 @@ export default function Review() {
     }
   }, [dispatch, getUsersState, router]);
 
-  console.log(users);
 
   return (
     <UserSidebar title="Review">
@@ -86,15 +83,14 @@ export default function Review() {
                   <tr>
                     <th>Name</th>
                     <th>
-                      Date Created <br />
-                      (MM/DD/YY)
+                     Email
                     </th>
-                    <th>Status</th>
-                    <th></th>
+                    <th>Position</th>
+                    <th>VotersID</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {review.map((data, i) => (
+                  {users.map((data, i) => (
                     <tr key={i} className="table-success">
                       <td>
                         {data?.firstName.charAt(0).toUpperCase() +
@@ -102,10 +98,10 @@ export default function Review() {
                         {data?.lastName.charAt(0).toUpperCase() +
                           data?.lastName.slice(1)}
                       </td>
-                      <td>{moment(data.createdDate).format('MM/DD/YYYY')}</td>
-                      <td>{data.status}</td>
+                      <td>{data?.email}</td>
+                      <td>{data?.userType}</td>
                       <td>
-                        <Link href={`/review/${data._id}`}>View</Link>
+                        {data?.votersID}
                       </td>
                     </tr>
                   ))}
