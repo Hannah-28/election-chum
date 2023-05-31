@@ -72,7 +72,7 @@ export default function SingleReview() {
     }
   }, [updateSingleReviewState, dispatch, router]);
 
-  console.log(file)
+
 
   const update = () => {
     const body = {
@@ -82,18 +82,17 @@ export default function SingleReview() {
     dispatch(updateSingleReview(id, body));
   };
   const passport = () => {
-    dispatch(getFile(singleReview.details.passport.passportID));
+    dispatch(getFile(singleReview.details.passport.path));
   };
   const birthCert = () => {
     if (singleReview['details']) {
-      dispatch(
-        getFile(
-          singleReview['details']['Birth Certificate']['Birth CertificateID']
-        )
-      );
+      dispatch(getFile(singleReview?.details?.certificate?.path));
     }
   };
 
+  const link = `https://shy-plum-swordfish-sari.cyclic.app/api/file/${singleReview?.details?.passport?.path}`;
+  const link2 = `https://shy-plum-swordfish-sari.cyclic.app/api/file/${singleReview?.details?.certificate?.path}`;
+  
   return (
     <UserSidebar title="Details">
       <div className="h-full my-10">
@@ -136,28 +135,28 @@ export default function SingleReview() {
               </div>
               <div className="my-4">
                 <h6>Passport</h6>
-                <button
+                {/* <button
                   className="border-black text-white hover:bg-black px-3 py-2 rounded-md bg-zinc-900 text-base font-medium"
                   onClick={() => {
                     passport();
                   }}
                 >
                   View
-                </button>
-                <img src={file} alt="passport" />
-                {/* <img src='https://shy-plum-swordfish-sari.cyclic.app/api/file/63dd75d970232d582c3442b1' alt="passport" /> */}
+                </button> */}
+                <img src={link} alt="passport" width="50%" height="50%" />
+                {/* <img src='https://shy-plum-swordfish-sari.cyclic.app/api/file/15a18d5499b221c64dc48cc78bc00c18.png' alt="passport" /> */}
               </div>
               <div className="my-4">
                 <h6>Birth Certificate</h6>
-                <button
-                  className="border-black text-white hover:bg-black px-3 py-2 rounded-md bg-zinc-900 text-base font-medium"
-                  onClick={() => {
-                    birthCert();
-                  }}
-                >
-                  View
-                </button>
-                <img src={singleReview.details.passport} alt="passport" />
+                {singleReview?.details?.certificate?.path
+                  .split('.')
+                  .includes('pdf') ? (
+                  <a href={link2} target="_blank" rel="noreferrer">
+                    download
+                  </a>
+                ) : (
+                  <img src={link2} alt="certificate" width="50%" height="50%" />
+                )}
               </div>
 
               <button

@@ -34,7 +34,7 @@ export default function Register() {
     LGA: Yup.string().trim().required('LGA is required'),
     residence: Yup.string().trim().required('State of Residence is required'),
     passport: Yup.string().trim().required('Passport is required'),
-    ['Birth Certificate']: Yup.string()
+    certificate: Yup.string()
       .trim()
       .required('Means of Identification is required'),
     password: Yup.string().trim().required('Password is required'),
@@ -45,16 +45,19 @@ export default function Register() {
       if (formikRef.current) {
         formikRef.current.resetForm();
       }
-      toast.success(`Check your mail in a few days to confirm if you're eligible to vote or not. Thanks`, {
-        position: 'top-center',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'light',
-      });
+      toast.success(
+        `Check your mail in a few days to confirm if you're eligible to vote or not. Thanks`,
+        {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        }
+      );
       setTimeout(() => {
         dispatch(registerCleanup());
         router.push('/login');
@@ -89,7 +92,7 @@ export default function Register() {
               LGA: '',
               residence: '',
               passport: '',
-              'Birth Certificate': '',
+              certificate: '',
               password: '',
             }}
             onSubmit={(values, { setSubmitting }) => {
@@ -247,24 +250,21 @@ export default function Register() {
                   ) : null}
                 </div>
                 <div className="mb-4">
-                  <label htmlFor="Birth Certificate">
+                  <label htmlFor="certificate">
                     Upload a means of identification:
                   </label>
                   <br />
                   <input
-                    name="Birth Certificate"
+                    name="certificate"
                     className="w-full mt-4 py-2 pl-2 text-gray-700"
                     type="file"
                     accept="image/*,.pdf"
                     onChange={(event) => {
-                      setFieldValue('Birth Certificate', event.target.files[0]);
+                      setFieldValue('certificate', event.target.files[0]);
                     }}
                   />
-                  {errors['Birth Certificate'] &&
-                  touched['Birth Certificate'] ? (
-                    <p style={{ color: 'red' }}>
-                      {errors['Birth Certificate']}
-                    </p>
+                  {errors.certificate && touched.certificate ? (
+                    <p style={{ color: 'red' }}>{errors.certificate}</p>
                   ) : null}
                 </div>
                 <div className="mb-10">
