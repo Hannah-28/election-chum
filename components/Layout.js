@@ -161,7 +161,7 @@ export default function Layout({ title, children }) {
 
       <footer className="flex justify-center items-center text-center my-10">
         <p className="text-sm">
-          &copy; 2022 - 2023 ELECTION CHUM, ALL RIGHTS RESERVED
+          &copy; {new Date().toLocaleDateString('en-us', { year: 'numeric' })}{' '} ELECTION CHUM, ALL RIGHTS RESERVED
         </p>
       </footer>
     </div>

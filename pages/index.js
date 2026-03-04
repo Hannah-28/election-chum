@@ -16,8 +16,7 @@ export default function Home() {
               for the presidential elections.
             </p>
             <p className="font-normal text-lg mb-10">
-              You can now register for the upcoming election on 28th of June,
-              2023.
+              You can now register for the upcoming elections.
             </p>
             <Link
               href="/register"
@@ -32,14 +31,11 @@ export default function Home() {
             <h1 className="mb-4 text-2xl font-bold">About</h1>
             <div>
               <h3 className="my-6 text-lg">
-                ElectionChum is packed with features for voting in the
-                presidential election. The process of this election is very
-                simple. This form of voting helps to foster transparency,
-                less-violence, convenience, increase voters during the election.
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse
-                tenetur sapiente itaque harum voluptatibus fugiat iste
-                dignissimos animi cum commodi incidunt consectetur, nostrum
-                illum eaque! Ipsa illo non labore delectus!
+                ElectionChum simplifies the voting process while promoting 
+                transparency, reducing election-related violence, improving 
+                accessibility, and increasing overall voter participation. 
+                Our platform is designed to make elections more credible, 
+                inclusive, and efficient.
               </h3>
               <div className="grid gap-5 lg:grid-cols-3 md:grid-cols-2 text-left">
                 <div className="shadow-md p-8 w-auto flex flex-col bg-gray-50 hover:bg-white hover:cursor-pointer rounded-md">
@@ -47,20 +43,14 @@ export default function Home() {
                     More voter Engagement
                   </h3>
                   <p className="text-gray-700 text-base font-normal">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Facilis minima, nobis modi eveniet obcaecati voluptatibus
-                    alias hic assumenda fugiat, dolorem id cum eos ad harum
-                    tenetur sunt mollitia delectus quo.
+                    Accessible and easy to use, enabling more citizens to participate from anywhere.
                   </p>
                 </div>
 
                 <div className="shadow-md p-8 w-auto flex flex-col bg-gray-50 hover:bg-white hover:cursor-pointer rounded-md">
-                  <h3 className="font-medium text-lg mb-3">Transparency</h3>
+                  <h3 className="font-medium text-lg mb-3">Transparent Process</h3>
                   <p className="text-gray-700 text-base font-normal">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Facilis minima, nobis modi eveniet obcaecati voluptatibus
-                    alias hic assumenda fugiat, dolorem id cum eos ad harum
-                    tenetur sunt mollitia delectus quo.
+                    Every vote is securely recorded and monitored, building trust in the electoral system.
                   </p>
                 </div>
 
@@ -69,30 +59,21 @@ export default function Home() {
                     Secure and Private
                   </h3>
                   <p className="text-gray-700 text-base font-normal">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Facilis minima, nobis modi eveniet obcaecati voluptatibus
-                    alias hic assumenda fugiat, dolorem id cum eos ad harum
-                    tenetur sunt mollitia delectus quo.
+                    Advanced encryption and authentication protect voter identity and data.
                   </p>
                 </div>
 
                 <div className="shadow-md p-8 w-auto flex flex-col bg-gray-50 hover:bg-white hover:cursor-pointer rounded-md">
-                  <h3 className="font-medium text-lg mb-3">Real-time result</h3>
+                  <h3 className="font-medium text-lg mb-3">Real-Time results</h3>
                   <p className="text-gray-700 text-base font-normal">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Facilis minima, nobis modi eveniet obcaecati voluptatibus
-                    alias hic assumenda fugiat, dolorem id cum eos ad harum
-                    tenetur sunt mollitia delectus quo.
+                   Instant vote counting and live result updates — accurate and reliable.
                   </p>
                 </div>
 
                 <div className="shadow-md p-8 w-auto flex flex-col bg-gray-50 hover:bg-white hover:cursor-pointer rounded-md">
-                  <h3 className="font-medium text-lg mb-3">Simple and fast</h3>
+                  <h3 className="font-medium text-lg mb-3">Simple & fast</h3>
                   <p className="text-gray-700 text-base font-normal">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Facilis minima, nobis modi eveniet obcaecati voluptatibus
-                    alias hic assumenda fugiat, dolorem id cum eos ad harum
-                    tenetur sunt mollitia delectus quo.
+                    A smooth voting experience from registration to final results in minutes.
                   </p>
                 </div>
               </div>
